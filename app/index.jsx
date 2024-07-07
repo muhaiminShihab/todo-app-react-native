@@ -69,7 +69,7 @@ const todo = () => {
                 />
                 ))
             : 
-            <View className="flex items-center mt-20">
+            <View className="flex items-center mt-40">
                 <View className="rounded-xl bg-white mb-2 p-3">
                 <Image
                     source={require("../assets/images/logo.png")}
@@ -88,8 +88,8 @@ const todo = () => {
       >
         <View className="m-4 flex flex-row justify-between items-center">
           <TextInput
-            className="bg-white rounded-lg p-3 border border-[#C9D3DB] w-[85%]"
-            placeholder="Enter To-Do"
+            className="bg-white rounded-lg py-2 px-4 border border-[#C9D3DB] w-[85%]"
+            placeholder="Input Task"
             placeholderTextColor={"gray"}
             onChangeText={(text) => setTodo(text)}
             value={todo}
