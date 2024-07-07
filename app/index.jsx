@@ -22,28 +22,35 @@ const todo = () => {
 
   const handleAdd = () => {
     Keyboard.dismiss();
-    console.log(todo);
+    // console.log(todo);
 
-    setTodos([...todos, todo]);
+    let newTodo = {
+      task: todo,
+      checked: false,
+    };
+
+    setTodos([...todos, newTodo]);
     setTodo("");
   };
 
   const handleDelete = (index) => {
-    Alert.alert(
-      "Delete Todo",
-      "Are you sure you want to delete this To-Do?",
-      [
-        {
-          text: "OK",
-          onPress: () => {
-            const newTodos = [...todos];
-            newTodos.splice(index, 1);
-            setTodos(newTodos);
-          },
+    Alert.alert("Delete Todo", "Are you sure you want to delete this To-Do?", [
+      {
+        text: "OK",
+        onPress: () => {
+          const newTodos = [...todos];
+          newTodos.splice(index, 1);
+          setTodos(newTodos);
         },
-      ],
-    );
+      },
+    ]);
   };
+
+  const handleChecked = (index) => {
+    const newTodos = [...todos];
+    newTodos[index].checked = !newTodos[index].checked;
+    setTodos(newTodos);
+  };  
 
   return (
     <SafeAreaView
@@ -58,29 +65,29 @@ const todo = () => {
       </View>
 
       <ScrollView>
-        {
-            todos.length > 0 ?
-                todos.map((todo, index) => (
-                <TodoItem
-                    key={index}
-                    todo={todo}
-                    index={index}
-                    handleDelete={handleDelete}
-                />
-                ))
-            : 
-            <View className="flex items-center mt-40">
-                <View className="rounded-xl bg-white mb-2 p-3">
-                <Image
-                    source={require("../assets/images/logo.png")}
-                    resizeMethod="contain"
-                    className="w-16 h-16"
-                    alt="Logo"
-                />
-                </View>
-                <Text className="text-xl font-bold">Empty List.</Text>
+        {todos.length > 0 ? (
+          todos.map((todo, index) => (
+            <TodoItem
+              key={index}
+              todo={todo}
+              index={index}
+              handleDelete={handleDelete}
+              handleChecked={handleChecked}
+            />
+          ))
+        ) : (
+          <View className="flex items-center mt-40">
+            <View className="rounded-xl bg-white mb-2 p-3">
+              <Image
+                source={require("../assets/images/logo.png")}
+                resizeMethod="contain"
+                className="w-16 h-16"
+                alt="Logo"
+              />
             </View>
-        }
+            <Text className="text-xl font-bold">Empty List.</Text>
+          </View>
+        )}
       </ScrollView>
 
       <KeyboardAvoidingView

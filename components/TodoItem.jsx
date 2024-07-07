@@ -1,13 +1,18 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 
-const TodoItem = ({ todo, index, handleDelete }) => {
+const TodoItem = ({ todo, index, handleDelete, handleChecked }) => {
   return (
     <View className="bg-blue-500 mx-4 rounded py-3 px-4 text-white flex items-center justify-btween flex-row mb-4">
       <View className="w-3/5">
         <View className="flex flex-row items-center gap-2">
-          <TouchableOpacity className="w-4 h-4 bg-[#e8ecf4] rounded"></TouchableOpacity>
-          <Text className="text-white">{todo}</Text>
+          <TouchableOpacity
+            onPress={() => handleChecked(index)}
+            className={`w-4 h-4 rounded ${
+              todo.checked ? "bg-green-500" : "bg-black"
+            }`}
+          ></TouchableOpacity>
+          <Text className={`text-white ${ todo.checked ? "line-through" : "" }`}>{todo.task}</Text>
         </View>
       </View>
       <View className="w-2/5">
