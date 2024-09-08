@@ -43,6 +43,11 @@ const todo = () => {
           setTodos(newTodos);
         },
       },
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
     ]);
   };
 
@@ -115,5 +120,3 @@ const todo = () => {
 };
 
 export default todo;
-
-const styles = StyleSheet.create({});
