@@ -13,16 +13,44 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import TodoItem from "../components/TodoItem";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const todo = () => {
   const [todo, setTodo] = React.useState("");
   const [todos, setTodos] = React.useState([]);
 
+  // Load todos from AsyncStorage when the app starts
+  useEffect(() => {
+    const loadTodos = async () => {
+      try {
+        const storedTodos = await AsyncStorage.getItem("@todos");
+        if (storedTodos !== null) {
+          setTodos(JSON.parse(storedTodos));
+        }
+      } catch (e) {
+        console.error("Failed to load todos:", e);
+      }
+    };
+    loadTodos();
+  }, []);
+
+  // Save todos to AsyncStorage whenever they change
+  useEffect(() => {
+    const saveTodos = async () => {
+      try {
+        const jsonValue = JSON.stringify(todos);
+        await AsyncStorage.setItem("@todos", jsonValue);
+      } catch (e) {
+        console.error("Failed to save todos:", e);
+      }
+    };
+    saveTodos();
+  }, [todos]);
+
   const handleAdd = () => {
     Keyboard.dismiss();
-    // console.log(todo);
 
     let newTodo = {
       task: todo,
@@ -55,7 +83,7 @@ const todo = () => {
     const newTodos = [...todos];
     newTodos[index].checked = !newTodos[index].checked;
     setTodos(newTodos);
-  };  
+  };
 
   return (
     <SafeAreaView
