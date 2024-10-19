@@ -52,6 +52,11 @@ const todo = () => {
   const handleAdd = () => {
     Keyboard.dismiss();
 
+    if (todo === "") {
+      alert("Please enter a To-Do");
+      return;
+    }
+
     let newTodo = {
       task: todo,
       checked: false,
